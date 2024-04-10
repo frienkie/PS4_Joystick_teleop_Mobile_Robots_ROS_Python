@@ -23,7 +23,8 @@ signal.signal(signal.SIGINT, signal_handler)
 class robot():
     def __init__(self):
         rospy.init_node('robot_controller', anonymous=True)
-        self.velocity_publisher = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
+        #self.velocity_publisher = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
+        self.velocity_publisher = rospy.Publisher('/cmd_vel_human', Twist, queue_size=1)
         self.pose_subscriber2 = rospy.Subscriber('/joy',Joy,self.callback)
         self.rate = rospy.Rate(20)
 
@@ -52,6 +53,7 @@ class robot():
 
 data=Joy()
 vel_msg=Twist()
+    
 
 ''' robot position '''
 turtle = robot()
