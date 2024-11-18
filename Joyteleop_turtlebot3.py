@@ -67,15 +67,15 @@ if __name__ == '__main__':
      if inn==1:
         if turtle.nemo==1:
              vel_msg.linear.x=turtle.linear*0.1
-             vel_msg.angular.z=turtle.angular*1.2
+             vel_msg.angular.z=turtle.angular*turtle.angular*0.4
         elif turtle.semo==1:
              #subprocess.call('',shell=True)
              p=subprocess.Popen('rostopic pub /reset std_msgs/Empty "{}"',shell=True)
              time.sleep(2)
              p.terminate()
         elif turtle.one==1:
-             vel_msg.linear.x=turtle.linear*0.22
-             vel_msg.angular.z=turtle.angular*2
+             vel_msg.linear.x=turtle.linear*0.2
+             vel_msg.angular.z=turtle.angular*turtle.angular*0.4
         elif turtle.x==1:
              vel_msg.linear.x=0
              vel_msg.angular.z=0
