@@ -65,7 +65,7 @@ class robot():
 
 data=Joy()
 vel_msg=Twist()
-efficient = 0.9 # 角度增益
+efficient = 0.4 # 角度增益
 
 
 ''' robot position '''
