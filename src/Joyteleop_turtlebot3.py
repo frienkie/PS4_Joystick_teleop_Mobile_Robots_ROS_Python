@@ -65,7 +65,7 @@ class robot():
 
 data=Joy()
 vel_msg=Twist()
-efficient = 0.4 # 角度增益
+efficient = 0.6 # 角度增益
 
 
 ''' robot position '''
@@ -94,7 +94,7 @@ if __name__ == '__main__':
              vel_msg.angular.z=0
         elif turtle.nemo==1:#slow
              vel_msg.linear.x=turtle.linear*0.1
-             vel_msg.angular.z=turtle.angular*1.2
+             vel_msg.angular.z=turtle.angular*0.2
         elif turtle.semo==1:
              #subprocess.call('',shell=True)
              p=subprocess.Popen('rostopic pub /reset std_msgs/Empty "{}"',shell=True)
