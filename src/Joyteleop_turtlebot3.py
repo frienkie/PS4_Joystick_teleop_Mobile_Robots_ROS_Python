@@ -34,8 +34,6 @@ class robot():
     def callback(self, data):
         global inn
         inn=0
-        # global flag
-        # flag=1
         self.joy = data.buttons
         self.joy2= data.axes
 
@@ -53,12 +51,7 @@ class robot():
             self.angular=self.joy2[3]
             self.lt=-(self.joy2[2]-1)
             self.rt=-(self.joy2[5]-1)
-            #self.angular=self.joy2[0]
-        # if inn==1:
-        #     if self.joy[0]==0 and self.joy[1]==0 and self.joy[2]==0 and self.joy[3]==0 and self.joy2[1] and self.joy2[3] and self.joy2[2] and self.joy2[5]:
-        #         inn=0
-        #     else:
-        #         pass
+
     def moving(self,vel_msg):
         self.velocity_publisher.publish(vel_msg)
 
@@ -76,22 +69,11 @@ turtle.callback(data) #without this, getting error
 ''' main '''
 if __name__ == '__main__':
  while 1:
-    # if inn==1:
-    #     if turtle.one==1:
-    #         time.sleep(0.05) # 休眠0.05秒
-    #         if turtle.one==1:
-    #             inn=0
-    #             time.sleep(0.5)
-    # if inn==0:
-    #     if turtle.one==1:
-    #         time.sleep(0.05) # 休眠0.05秒
-    #         if turtle.one==1:
-    #             inn=1
-    #             time.sleep(0.5)
     if inn==1:
-        if turtle.x==1 or turtle.rt>0.1:
+        if turtle.x==1 or turtle.rt>1.2:
              vel_msg.linear.x=0
              vel_msg.angular.z=0
+             
         elif turtle.nemo==1:#slow
              vel_msg.linear.x=turtle.linear*0.1
              vel_msg.angular.z=turtle.angular*0.2
@@ -108,14 +90,15 @@ if __name__ == '__main__':
             vel_msg.linear.x=turtle.linear*0.2
 
         # elif turtle.one==1:#quick
-        elif turtle.lt>0 and turtle.linear>0:
+        # elif turtle.lt>0 and turtle.linear>0:
+        elif turtle.joy2[1]>0:
              vel_msg.linear.x=turtle.linear*0.2
              vel_msg.angular.z=turtle.angular*abs(turtle.angular)*efficient
         elif turtle.lt>0:
             vel_msg.linear.x=turtle.lt/2*0.2
             vel_msg.angular.z=turtle.angular*abs(turtle.angular)*efficient
         else:
-            vel_msg.linear.x=turtle.linear*0.2
+            vel_msg.linear.x=0.0
             vel_msg.angular.z=turtle.angular*abs(turtle.angular)*efficient
         turtle.moving(vel_msg)
     # else:
