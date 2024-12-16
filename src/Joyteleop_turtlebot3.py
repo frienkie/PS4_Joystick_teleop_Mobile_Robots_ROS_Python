@@ -5,7 +5,7 @@ import roslib
 import subprocess
 import time
 from geometry_msgs.msg  import Twist
-from sensor_msgs.msg import Joy
+from sensor_msgs.msg import Joy,JoyFeedbackArray,JoyFeedback
 import sys
 import signal
 
@@ -19,6 +19,7 @@ class robot():
         rospy.init_node('robot_controller', anonymous=True)
         print("human is 0,share is 1")
         x=input()
+        # self.vibration = rospy.Publisher('joy/set_feedback',JoyFeedbackArray,queue_size=1)
         if x=="0":
             self.velocity_publisher = rospy.Publisher('cmd_vel', Twist, queue_size=1)
         elif x=="1":
@@ -26,6 +27,7 @@ class robot():
         else:
             rospy.loginfo("input error,run as human")
             self.velocity_publisher = rospy.Publisher('cmd_vel', Twist, queue_size=1)
+
         #self.velocity_publisher = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
         #self.velocity_publisher = rospy.Publisher('/cmd_vel_human', Twist, queue_size=1)
         self.pose_subscriber2 = rospy.Subscriber('/joy',Joy,self.callback)
@@ -54,6 +56,21 @@ class robot():
 
     def moving(self,vel_msg):
         self.velocity_publisher.publish(vel_msg)
+    # def vib(self,vib_msg):
+    #     self.vibration.publish(vib_msg)
+
+# vibra=JoyFeedback()
+# vibra.type=1
+# vibra.id=1
+# vibra.intensity=1.0
+# # feedback=JoyFeedbackArray()
+# # feedback.array.append(vibra)
+# novibra=JoyFeedback()
+# novibra.type=1
+# novibra.id=1
+# novibra.intensity=0.0
+# feedback=JoyFeedbackArray(array=[vibra])
+
 
 
 data=Joy()
@@ -91,7 +108,7 @@ if __name__ == '__main__':
 
         # elif turtle.one==1:#quick
         # elif turtle.lt>0 and turtle.linear>0:
-        elif turtle.joy2[1]>0:
+        elif turtle.joy2[1]>0.01 or turtle.joy2[1]<-0.01:
              vel_msg.linear.x=turtle.linear*0.2
              vel_msg.angular.z=turtle.angular*abs(turtle.angular)*efficient
         elif turtle.lt>0:
@@ -101,18 +118,6 @@ if __name__ == '__main__':
             vel_msg.linear.x=0.0
             vel_msg.angular.z=turtle.angular*abs(turtle.angular)*efficient
         turtle.moving(vel_msg)
-    # else:
-    #     print('no joystick input')
-    #     vel_msg.linear.x=0
-    #     vel_msg.angular.z=0
-    #     turtle.moving(vel_msg) 
+    # turtle.vib(feedback)   #test vibration 
 
-    #    flag=1        
-    # else:
-    #     if flag==1:
-    #         print('stop')
-    #         flag=0
-    #     vel_msg.linear.x=0
-    #     vel_msg.angular.z=0
-    #     turtle.moving(vel_msg) 
     turtle.rate.sleep()

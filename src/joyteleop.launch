@@ -1,4 +1,5 @@
 <launch>
   <node name="joy_node" pkg="joy" type="joy_node" />
   <node pkg="ps4" type="Joyteleop_turtlebot3.py" name="robot_controller" output="screen"/>
+  <param name="joy_node/dev_ff" value="/dev/input/event7" />
 </launch>
