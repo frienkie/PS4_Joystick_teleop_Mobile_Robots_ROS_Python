@@ -108,7 +108,7 @@ if __name__ == '__main__':
 
         # elif turtle.one==1:#quick
         # elif turtle.lt>0 and turtle.linear>0:
-        elif turtle.joy2[1]>0.01 or turtle.joy2[1]<-0.01:
+        elif turtle.joy2[1]>0:
              vel_msg.linear.x=turtle.linear*0.2
              vel_msg.angular.z=turtle.angular*abs(turtle.angular)*efficient
         elif turtle.lt>0:
